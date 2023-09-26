@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <button id="mint">Mint Tokens</button>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script>
+        window.addEventListener('load', async () => {
+            if (window.ethereum) {
+                window.web3 = new Web3(ethereum);
+                try {
+                    await ethereum.enable();
+                    var accounts = await web3.eth.getAccounts();
+                    var contract = new web3.eth.Contract('Your_ABI', 'Your_Contract_Address');
+                    document.getElementById('mint').addEventListener('click', () => {
+                        contract.methods.mint(accounts[0], 100).send({from: accounts[0]});
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
